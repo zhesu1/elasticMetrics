@@ -6,9 +6,9 @@ import scipy.optimize as optimize
 import scipy.io as sio
 
 
-
 # the main program for calculating a geodesic in the space of immersions
-# inputs: f1, f2...two surfaces of size 3*num_phi*num_theta, where num_theta is odd
+# inputs: f1, f2...two surfaces of size 3*num_phi*num_theta, where phi denotes the polar angle and theta denotes the azimuthal angle.
+#                  (To use the code, num_theta must be odd !!!)
 #         MaxDegHarmSurf...the maximal degree of spherical harmonics for the basis of the space of immersions
 #         Cmetric = a,b,c,d...weights of the split metric:
 #    		    a weights the term that measures the change in metric, 
@@ -20,8 +20,6 @@ import scipy.io as sio
 # outputs: geo_f...the geodesic in the space of immersions between f1 and f2
 #          AllEnergy...the energies of curves in the optimization process
 #
-
-
 def compute_geodesic_main(f1, f2, *, MaxDegHarmSurf, Cmetric=(), Tpts, Max_ite=300):
 
     # load the bases for surfaces and exact 1forms
@@ -37,9 +35,9 @@ def compute_geodesic_main(f1, f2, *, MaxDegHarmSurf, Cmetric=(), Tpts, Max_ite=3
     # get the coefficients for the split metric
     a, b, c, d = Cmetric
         
-    geo_f, Energy = compute_geodesic_para(f1, f2, a, b, c, d, Basis_Sph, Basis_1forms, Tpts, Max_ite)
+    geo_f, AllEnergy = compute_geodesic_para(f1, f2, a, b, c, d, Basis_Sph, Basis_1forms, Tpts, Max_ite)
 
-    return geo_f, Energy
+    return geo_f, AllEnergy
 
 
 def compute_geodesic_para(f1, f2, a, b, c, d, Basis_Sph, Basis_1forms, Tpts, Max_ite):

@@ -6,25 +6,43 @@ from ShapePackages.Initialization_Diffs import initialize_over_diffs_main
 import scipy.io as sio
    
 
+# the main program for calculating a geodesic in the space of unparametrized surfaces
+# inputs: f1, f2...two surfaces of size 3*num_phi*num_theta, where phi denotes the polar angle and theta denotes the azimuthal angle.
+#                  (To use the code, num_theta must be odd !!!)
+#         MaxDegVecFS2...the maximal degree of spherical harmonics for the basis of vector fields on S2
+#         MaxDegHarmSurf...the maximal degree of spherical harmonics for the basis of the space of immersions
+#         Cmetric = a,b,c,d...weights of the split metric:
+#    		    a weights the term that measures the change in metric, 
+#    		    b weights the term that measures the change in volume density and 
+#    		    c weights the term that measures the change in normal direction
+#    		    d weights the term that measures the change in local reparametrization
+#         Tpts...the number of time points
+#         method...split or combined
+#         Max_ite...the maximum number of iterations for the whole optimization process and the maximal number of iterations for each 
+#                   optimization 
+#         **kwargs... use multires or not
+# outputs: geo_f...the geodesic in the space of immersions between f1 and f2
+#          AllEnergy...the energies of curves in the optimization process
+#
 def compute_geodesic_shape_main(f1, f2, *, MaxDegVecFS2, MaxDegHarmSurf,
-                           Cmetric=(), Tstps, method='split', maxiter=(10, 30), **kwargs):
+                           Cmetric=(), Tpts, method='split', maxiter=(10, 30), **kwargs):
     
     f, f2 = center_surf(f1), center_surf(f2) 
     
     a,b,c,d = Cmetric
     f, Energyrepa, f1_gamma, L, f1_barh, length_linear = initialize_over_diffs_main(f, f2, a, b, c, d, 3, 100)
         
-    geo, EnergyAll0 = compute_geodesic_unpara(f, f2, Cmetric = Cmetric,
-                                             Tstps = Tstps,  # the number of time points of the geodesic
+    geo, AllEnergy = compute_geodesic_unpara(f, f2, Cmetric = Cmetric,
+                                             Tpts = Tpts,  # the number of time points of the geodesic
                                              MaxDegHarmSurf = MaxDegHarmSurf,
                                              MaxDegVecFS2 = MaxDegHarmSurf,
                                              method = method,
                                              maxiter = maxiter, **kwargs)
-    return geo, EnergyAll0
+    return geo, AllEnergy
 
 
 def compute_geodesic_unpara(f1, f2, *, MaxDegVecFS2, MaxDegHarmSurf,
-                           Cmetric=(), Tstps, method='split', maxiter=(10, 30), **kwargs):
+                           Cmetric=(), Tpts, method='split', maxiter=(10, 30), **kwargs):
 
     # load the bases for surfaces and exact 1forms
     mat_basis = sio.loadmat('Data/basis_exact_1forms_deg25_{0}_{1}.mat'.format(*f1.shape[-2:]))
@@ -59,49 +77,49 @@ def compute_geodesic_unpara(f1, f2, *, MaxDegVecFS2, MaxDegHarmSurf,
         # determine the reparametrization on one side (0) or both sides (1)
         side = 0  # 0 or 1
         
-        Tstps0 = Tstps
+        Tpts0 = Tpts
         
         if kwargs.get('multires'):
             multires = True
             
             # multresolution in time
-            Tstps_low = 10   
-            Tstps0 = Tstps_low
+            Tpts_low = 10   
+            Tpts0 = Tpts_low
             
         else: 
             multires = False
         
-        Coe_x = torch.zeros(Basis_Sph.size(0), Tstps0 - 2)
+        Coe_x = torch.zeros(Basis_Sph.size(0), Tpts0 - 2)
         
         for i in range(N_ite):
             
             if i == N_ite-1:
                 Max_ite_in = 100
-                if Tstps0 != Tstps:
-                    Tstps0 = Tstps
-                    Coe_x = up_sample(Coe_x, Tstps - 2)
+                if Tpts0 != Tpts:
+                    Tpts0 = Tpts
+                    Coe_x = up_sample(Coe_x, Tpts - 2)
                 
             if i > round(int(N_ite/2)):
                 multires = False
      
             f_f1, f_f2, Coe_x, Energy = get_optCoe_shapes_split(f_f1, f_f2, Coe_x, f1_new, f2, Basis_vecFields, 
-                                                                Basis_Sph, Basis_1forms, a, b, c, d, Tstps0,
+                                                                Basis_Sph, Basis_1forms, a, b, c, d, Tpts0,
                                                                 Max_ite_in, side, **{'multires': multires})
             EnergyAll.append(Energy)
         
         # get the geodesic
-        Time_points = torch.arange(Tstps, out=torch.FloatTensor())
-        lin_f = f1_new + torch.einsum("imn,t->timn", [f2-f1_new, Time_points])/(Tstps-1)
+        Time_points = torch.arange(Tpts, out=torch.FloatTensor())
+        lin_f = f1_new + torch.einsum("imn,t->timn", [f2-f1_new, Time_points])/(Tpts-1)
         
         # perturbe the linear path using the optimal coefficients
-        geo_f = torch.zeros(Tstps, 3, *f1.shape[-2:])
+        geo_f = torch.zeros(Tpts, 3, *f1.shape[-2:])
         geo_f[0], geo_f[-1] = f_f1, f_f2
-        geo_f[1: Tstps - 1] = lin_f[1: Tstps - 1] + torch.einsum("limn,lt->timn", [Basis_Sph, Coe_x])
+        geo_f[1: Tpts - 1] = lin_f[1: Tpts - 1] + torch.einsum("limn,lt->timn", [Basis_Sph, Coe_x])
         
     elif method == 'combined':
         
         f = f1_new
-        Coe_x = torch.zeros(Basis_Sph.size(0), Tstps - 2)
+        Coe_x = torch.zeros(Basis_Sph.size(0), Tpts - 2)
 
         idty = get_idty_S2(*Basis_vecFields.shape[-2:])
         
@@ -111,7 +129,7 @@ def compute_geodesic_unpara(f1, f2, *, MaxDegVecFS2, MaxDegHarmSurf,
                 Max_ite_in = 100
     
             X_new, Coe_x, Energy = get_optCoe_shapes_combined(f, Coe_x, f1_new, f2, Basis_vecFields,
-                                                               Basis_1forms, a, b, c, d, Tstps, Max_ite_in)
+                                                               Basis_1forms, a, b, c, d, Tpts, Max_ite_in)
     
             # update f
             gamma = idty + torch.einsum("i, ijkl->jkl", [X_new, Basis_vecFields])
@@ -123,13 +141,13 @@ def compute_geodesic_unpara(f1, f2, *, MaxDegVecFS2, MaxDegHarmSurf,
             EnergyAll.append(Energy)
         
         # get the geodesic
-        Time_points = torch.arange(Tstps, out=torch.FloatTensor())
-        lin_f = f1_new + torch.einsum("imn,t->timn", [f2-f1_new, Time_points])/(Tstps-1)
+        Time_points = torch.arange(Tpts, out=torch.FloatTensor())
+        lin_f = f1_new + torch.einsum("imn,t->timn", [f2-f1_new, Time_points])/(Tpts-1)
 
         # perturbe the linear path using the optimal coefficients
-        geo_f = torch.zeros(Tstps, 3, *f1.shape[-2:])
-        geo_f[0], geo_f[Tstps - 1] = f, f2
-        geo_f[1: Tstps - 1] = lin_f[1: Tstps - 1] + torch.einsum("limn,lt->timn", [Basis_Sph, Coe_x])
+        geo_f = torch.zeros(Tpts, 3, *f1.shape[-2:])
+        geo_f[0], geo_f[Tpts - 1] = f, f2
+        geo_f[1: Tpts - 1] = lin_f[1: Tpts - 1] + torch.einsum("limn,lt->timn", [Basis_Sph, Coe_x])
     
     EnergyAll0 = [item for sublist in EnergyAll for item in sublist]
     return geo_f, EnergyAll0
