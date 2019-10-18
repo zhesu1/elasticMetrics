@@ -43,6 +43,10 @@ The code was tested on jupyter notebook.
 
 See the files "Calculate_geodesic_para.ipynb", "Calculate_geodesic_para.ipynb" and "Calculate_geodesic_para.ipynb" for examples of how to use the code. 
 
+## Remark
+
+To use the code, the resolution of surfaces should be resampled to 50*99 (the number of discrete zenith and azimuthal angles) since the bases of spherical harmonics are preloaded with resolution 50*99. For the matching of surfaces with other resolutions, the corresponding bases of spherical harmonics should be added in folder "data".
+
 ## License
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
