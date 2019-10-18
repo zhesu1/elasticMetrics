@@ -5,7 +5,6 @@ Tools for Geometric shape analysis of spherical surfaces with first order elasti
 ## What is it?
 
 This code provides tools for geometric shape analysis on spherical surfaces with first order elastic metrics. 
-It can be used to solve the initial and boundary value problem for geodesics and compute Karcher means. 
 It is able to factor out reparametrizations, translations and rotations.
 
 For details we refer to our papers
