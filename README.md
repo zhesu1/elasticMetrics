@@ -5,7 +5,7 @@ Tools for Geometric shape analysis of spherical surfaces with first order elasti
 ## What is it?
 
 This code provides tools for geometric shape analysis on spherical surfaces with first order elastic metrics. 
-It is able to factor out reparametrizations, translations and rotations. The following are two examples of geodesics between unparametrized surfaces presented in the paper "[Shape Analysis of Surfaces Using General Elastic Metrics]"{https://arxiv.org/abs/1910.02045}.
+It is able to factor out reparametrizations, translations and rotations. The following are two examples of geodesics between unparametrized surfaces presented in the paper "[Shape Analysis of Surfaces Using General Elastic Metrics]"(https://arxiv.org/abs/1910.02045).
 
 ![geo1](https://github.com/zhesu1/Figures/raw/master/registeredcat12_geo_unpara_1_1_-1_0_deg7_degv7_T13.png)
 ![geo2](https://github.com/zhesu1/Figures/raw/master/registeredhorse02_geo_unpara_1_1_-1_0_deg7_degv7_T13.png")
