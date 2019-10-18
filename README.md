@@ -35,7 +35,7 @@ Please install the following packages
 * Pytorch: [https://pytorch.org/](https://pytorch.org/)
 * Numpy: [https://numpy.org/](https://numpy.org/)
 * Scipy: [https://www.scipy.org/](https://www.scipy.org/)
-* Mayavi (for plot): [https://docs.enthought.com/mayavi/mayavi/](https://docs.enthought.com/mayavi/mayavi/)
+* Mayavi (for plotting): [https://docs.enthought.com/mayavi/mayavi/](https://docs.enthought.com/mayavi/mayavi/)
 
 The code was tested on jupyter notebook.
 
