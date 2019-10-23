@@ -20,7 +20,7 @@ def initialize_over_diffs_main(f1, f2, a, b, c, d, MaxDegVecFS2 = 5, Max_ite = 5
 def Initialization_overDiff(f1, f2, idty, a, b, c, d, MaxDegVecFS2, Max_ite):
     
     # load the basis for tangent vector fields on S2
-    mat_vecF = sio.loadmat('Data/basis_vecFieldsS2_deg25_{0}_{1}.mat'.format(*f1.shape[-2:]))
+    mat_vecF = sio.loadmat('Bases/basis_vecFieldsS2_deg25_{0}_{1}.mat'.format(*f1.shape[-2:]))
     
     N_basis_vec = (MaxDegVecFS2 + 1) ** 2 - 1  # half the number of basis for the vector fields on S2
     Basis0_vec = torch.from_numpy(mat_vecF['Basis'])[: N_basis_vec].float()
@@ -67,7 +67,7 @@ def initialize_over_paraSO3(f1, f2, idty, a, b, c, d):
     Tstps = 2
     
     # load the elements in the icosahedral group
-    XIco_mat = sio.loadmat('Data/skewIcosahedral.mat')
+    XIco_mat = sio.loadmat('Bases/skewIcosahedral.mat')
     XIco = torch.from_numpy(XIco_mat['X']).float()
     
     df2 = f_to_df(f2)

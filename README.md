@@ -1,6 +1,6 @@
 # elasticMetrics
 
-Tools for Geometric shape analysis of spherical surfaces with first order elastic metrics based on our work with Eric Klassen, Hamid Laga and Stephen C. Preston.
+Tools for Geometric shape analysis of spherical surfaces with first order elastic metrics based on the work by Martin Bauer, Eric Klassen, Hamid Laga, Stephen C. Preston and Zhe Su.
 
 ## What is it?
 
@@ -44,7 +44,7 @@ The code was tested on jupyter notebook.
 
 ## Usage
 
-See the files "Calculate_geodesic_para.ipynb", "Calculate_geodesic_unpara.ipynb" and "Calculate_geodesic_unparaModSO3.ipynb" for examples of how to use the code. The resolution of surfaces should be resampled to 50 x 99 (the number of discrete zenith and azimuthal angles) since the bases of spherical harmonics are preloaded with resolution 50 x 99. For the matching of surfaces with other resolutions, the corresponding bases of spherical harmonics should be added in folder "data".
+See the files "Calculate_geodesic_para", "Calculate_geodesic_unpara" and "Calculate_geodesic_unparaModSO3" for examples of how to use the code. Each surface should be represented using spherical coordinates as a function $f:[0,\pi]\times[0,2\pi]\to \mathbb{R}^3$ such that $f(0,\theta) = f(0,0), f(\pi,\theta) = f(\pi,0) and f(\phi, 0) = f(\phi, 2\pi)$. The code can be used directly for surfaces with resolution 50 x 99 (the numbers of discrete polar and azimuthal angles) since the corresponding bases are preloaded in the folder "Bases".  For the other resolutions, one can resample the surfaces or generate the corresponding bases for surfaces using the files in folder "generateBases" and then put the bases files in folder "Bases". 
 
 ## License
 

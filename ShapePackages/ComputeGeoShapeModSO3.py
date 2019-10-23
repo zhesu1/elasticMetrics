@@ -58,14 +58,14 @@ def compute_geodesic_unparaModSO3(f1, f2, *, MaxDegVecFS2, MaxDegHarmSurf,
                            Cmetric=(), Tpts, method='split', maxiter=(10, 30), **kwargs):
 
     # load the bases for surfaces and exact 1forms
-    mat_basis = sio.loadmat('Data/basis_exact_1forms_deg25_{0}_{1}.mat'.format(*f1.shape[-2:]))
+    mat_basis = sio.loadmat('Bases/basis_exact_1forms_deg25_{0}_{1}.mat'.format(*f1.shape[-2:]))
 
     Num_basis = ((MaxDegHarmSurf + 1) ** 2 - 1) * 3  # the number of basis for 1forms
     Basis_Sph = torch.from_numpy(mat_basis['Basis_Sph'])[: Num_basis].float()
     Basis_1forms = torch.from_numpy(mat_basis['Basis'])[: Num_basis].float()
 
     # load the basis for tangent vector fields on S2
-    mat_vecF = sio.loadmat('Data/basis_vecFieldsS2_deg25_{0}_{1}.mat'.format(*f1.shape[-2:]))
+    mat_vecF = sio.loadmat('Bases/basis_vecFieldsS2_deg25_{0}_{1}.mat'.format(*f1.shape[-2:]))
 
     N_basis_vec = (MaxDegVecFS2 + 1) ** 2 - 1  # half the number of basis for the vector fields on S2
     Basis0_vec = torch.from_numpy(mat_vecF['Basis'])[: N_basis_vec].float()

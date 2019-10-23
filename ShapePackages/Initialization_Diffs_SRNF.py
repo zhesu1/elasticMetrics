@@ -18,7 +18,7 @@ def initialize_over_diffs_main_SRNF(f1, f2, MaxDegVecFS2 = 2, Max_ite = 50):
 def initialize_over_diffs_SRNF(f1, f2, idty, MaxDegVecFS2, Max_ite):
     
     # load the basis for tangent vector fields on S2
-    mat_vecF = sio.loadmat('Data/basis_vecFieldsS2_deg25_{0}_{1}.mat'.format(*f1.shape[-2:]))
+    mat_vecF = sio.loadmat('Bases/basis_vecFieldsS2_deg25_{0}_{1}.mat'.format(*f1.shape[-2:]))
     
     N_basis_vec = (MaxDegVecFS2 + 1) ** 2 - 1  # half the number of basis for the vector fields on S2
     Basis0_vec = torch.from_numpy(mat_vecF['Basis'])[: N_basis_vec].float()
@@ -68,7 +68,7 @@ def E_L2_SRNFS(X, f1, f2, idty, Basis_vecFields):
 def initialize_over_paraSO3_SRNF(f1, f2, idty):
     
     # load the elements in the icosahedral group
-    XIco_mat = sio.loadmat('Data/skewIcosahedral.mat')
+    XIco_mat = sio.loadmat('Bases/skewIcosahedral.mat')
     XIco = torch.from_numpy(XIco_mat['X']).float()
     
     q2 = f_to_q(f2)

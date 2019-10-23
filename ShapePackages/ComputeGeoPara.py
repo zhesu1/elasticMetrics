@@ -23,7 +23,7 @@ import scipy.io as sio
 def compute_geodesic_main(f1, f2, *, MaxDegHarmSurf, Cmetric=(), Tpts, Max_ite=300):
 
     # load the bases for surfaces and exact 1forms
-    mat_basis = sio.loadmat('Data/basis_exact_1forms_deg25_{0}_{1}.mat'.format(*f1.shape[-2:]))
+    mat_basis = sio.loadmat('Bases/basis_exact_1forms_deg25_{0}_{1}.mat'.format(*f1.shape[-2:]))
 
     Num_basis = ((MaxDegHarmSurf + 1) ** 2 - 1) * 3  # the number of basis for 1forms
     Basis_Sph = torch.from_numpy(mat_basis['Basis_Sph'])[: Num_basis].float()
