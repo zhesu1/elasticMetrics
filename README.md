@@ -1,6 +1,6 @@
 # elasticMetrics
 
-Tools for Geometric shape analysis of spherical surfaces with first order elastic metrics based on the work by Martin Bauer, Eric Klassen, Hamid Laga, Stephen C. Preston and Zhe Su.
+Tools for geometric shape analysis of spherical surfaces with first order elastic metrics based on the work by Martin Bauer, Eric Klassen, Hamid Laga, Stephen C. Preston and Zhe Su.
 
 ## What is it?
 
