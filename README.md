@@ -42,6 +42,22 @@ Please install the following packages
 
 The code was tested on jupyter notebook.
 
+## Shape Data
+
+The datasets in the folder "ShapeData" are obtained from [http://tosca.cs.technion.ac.il/book/resources_data.html](http://tosca.cs.technion.ac.il/book/resources_data.html) and parametrized using the implementation provided in the following paper by Kurtek et al:
+```css
+@inproceedings{kurtek2013landmark,
+  title={Landmark-guided elastic shape analysis of spherically-parameterized surfaces},
+  author={Kurtek, Sebastian and Srivastava, Anuj and Klassen, Eric and Laga, Hamid},
+  booktitle={Computer graphics forum},
+  volume={32},
+  number={2pt4},
+  pages={429--438},
+  year={2013},
+  organization={Wiley Online Library}
+}
+```
+
 ## Usage
 
 See the files "Calculate_geodesic_para", "Calculate_geodesic_unpara" and "Calculate_geodesic_unparaModSO3" for examples of how to use the code. Each surface should be represented using spherical coordinates as a function f:[0, &pi;] x [0, 2&pi;] &rarr; R<sup>3</sup> 
