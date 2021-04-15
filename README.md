@@ -17,15 +17,18 @@ For details we refer to our papers
 @article{BKPS2018,
     title={A Diffeomorphism-Invariant Metric on the Space of Vector-Valued One-Forms}, 
     author={Martin Bauer, Eric Klassen, Stephen C. Preston, Zhe Su},
-    journal={arXiv:1812.10867},
+    journal={To appear in Pure and Applied Mathematics Quarterly},
     year={2018},  
 }
 
-@article{SBPLK2019, 
-    title={Shape Analysis of Surfaces Using General Elastic Metrics},
-    author={Zhe Su, Martin Bauer, Stephen C. Preston, Hamid Laga, Eric Klassen},
-    journal={arXiv:1910.02045},
-    year={2019},  
+@article{su2020shape,
+  title={Shape analysis of surfaces using general elastic metrics},
+  author={Su, Zhe and Bauer, Martin and Preston, Stephen C and Laga, Hamid and Klassen, Eric},
+  journal={Journal of Mathematical Imaging and Vision},
+  volume={62},
+  pages={1087--1106},
+  year={2020},
+  publisher={Springer}
 }
 ```
 
