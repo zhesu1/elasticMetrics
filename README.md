@@ -14,11 +14,14 @@ It is able to factor out reparametrizations, translations and rotations. The fol
 For details we refer to our papers
 
 ```css
-@article{BKPS2018,
-    title={A Diffeomorphism-Invariant Metric on the Space of Vector-Valued One-Forms}, 
-    author={Martin Bauer, Eric Klassen, Stephen C. Preston, Zhe Su},
-    journal={To appear in Pure and Applied Mathematics Quarterly},
-    year={2018},  
+@article{bauer2021oneforms,
+	title={A diffeomorphism-invariant metric on the space of vector-valued one-forms},
+	author={Martin Bauer, Eric Klassen, Stephen C. Preston and Zhe Su},
+	journal={Pure and Applied Mathematics Quarterly},
+	volume={17},
+	number={1},
+	pages={141-–183},
+	year={2021}
 }
 
 @article{su2020shape,
